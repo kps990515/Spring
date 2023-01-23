@@ -1,6 +1,6 @@
 ## 3장 - Validation
 
-![자료](https://github.com/kps990515/Spring/blob/main/2%EC%9E%A5/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.png)
+![자료](https://github.com/kps990515/Spring/blob/main/3%EC%9E%A5/Validation.png)
 
 ### Default Validation
 ```java
