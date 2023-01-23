@@ -172,3 +172,30 @@ public class RestApiController {
 
 }
 ```
+
+### ObjectMapper
+```java
+String json = objectMapper.writeValueAsString(user);
+System.out.println(json);
+
+User parsing = objectMapper.readValue(json, User.class);
+System.out.println(parsing);
+
+// node parsing
+
+JsonNode jsonNode = objectMapper.readTree(json);
+String name = jsonNode.get("name").asText();
+int age = jsonNode.get("age").asInt();
+System.out.println(name);
+System.out.println(age);
+
+JsonNode cars = jsonNode.get("car");
+ArrayNode arrayNode = (ArrayNode)cars;
+List<Car> _car = objectMapper.convertValue(arrayNode, new TypeReference<List<Car>>() {});
+System.out.println(_car);
+
+
+ObjectNode objectNode = (ObjectNode)jsonNode;
+objectNode.put("name","abcd");
+System.out.println(objectNode.toPrettyString());
+```
