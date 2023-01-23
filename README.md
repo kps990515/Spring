@@ -5,3 +5,6 @@
 
 ### 2. [2장](https://github.com/kps990515/Spring/tree/master/2장)
        IOC,DI / AOP
+
+### 3. [3장](https://github.com/kps990515/Spring/tree/master/3장)
+       Validation
