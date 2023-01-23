@@ -39,7 +39,7 @@ class AppConfig{
 ```
 
 ### AOP
-![자료](.\다운로드.png)
+![자료](.\2장\다운로드.png)
 
 - Parameter AOP
 ```java
