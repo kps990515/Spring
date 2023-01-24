@@ -1,6 +1,6 @@
 ## 5장 - Filter Interceptor
 
-![자료](https://github.com/kps990515/Spring/blob/main/3%EC%9E%A5/Validation.png)
+![자료](https://github.com/kps990515/Spring/blob/main/5%EC%9E%A5/filter.png)
 
 1. filter
 - Client 요청/응답의 최초/최종단계 위치
