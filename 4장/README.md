@@ -15,6 +15,7 @@ public class ApiControllerAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
     }
 }
+```
 
 2. 함수 Argument 잘못 들어왔을 시
 ```java
