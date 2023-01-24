@@ -20,3 +20,6 @@
 
 ### 7. [7장](https://github.com/kps990515/Spring/tree/master/7장)
        RestTemplate
+
+### 8. [8장](https://github.com/kps990515/Spring/tree/master/8장)
+       JUnit
