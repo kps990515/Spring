@@ -8,3 +8,6 @@
 
 ### 3. [3장](https://github.com/kps990515/Spring/tree/master/3장)
        Validation
+
+### 4. [4장](https://github.com/kps990515/Spring/tree/master/4장)
+       Exception
