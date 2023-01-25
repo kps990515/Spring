@@ -5,10 +5,10 @@
 
 1. 전체 Exception 처리
 ```java
-// basePackageClasses를 통해 클래스마다 지정가능
+// basePackageClasses를 통해 클래스마다 지정가능(APiController 클래스안에서 예외를 처리)
 @RestControllerAdvice(basePackageClasses = ApiController.class)
 public class ApiControllerAdvice {
-    // 여기서 value는 해당 Exception처리 할 범위
+    // Exception클래스에 해당하는 exception이 뜨면 아래처럼 처리
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity exception(Exception e){
         System.out.println(e.getClass().getName());
