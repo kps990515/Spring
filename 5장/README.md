@@ -15,7 +15,7 @@ public class RequestFilter implements Filter {
         // request, reponse는 Controller에서 읽어야하기때문에 따로 캐싱 클래스 사용해서 캐싱 사용
         ContentCachingRequestWrapper wrappingRequest = new ContentCachingRequestWrapper((HttpServletRequest)request);
         ContentCachingResponseWrapper wrappingResponse = new ContentCachingResponseWrapper((HttpServletResponse) response);
-        //filterChain에 
+        //filterChain에 연결
         chain.doFilter(wrappingRequest, wrappingResponse);
 
         System.out.println("---req ---");
