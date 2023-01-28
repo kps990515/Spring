@@ -1,6 +1,6 @@
 ## java.util.function 패키지
 
-![자료](https://github.com/kps990515/Spring/blob/main/3%EC%9E%A5/Validation.png)
+![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/javaUtilFunction/function.png)
 
 ```java
 Supplier<Integer> s = () -> (int)(Math.random()*100) + 1
@@ -47,7 +47,7 @@ String s = "";
 if(isEmptyStr.test(s)){sysout(...)}
 ```
 
-![자료](https://github.com/kps990515/Spring/blob/main/3%EC%9E%A5/Validation.png)
+![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/javaUtilFunction/bifunction.png)
 ```java
 @FunctionalInterface
 interface TriFunction<T,U,V,R>{
@@ -55,7 +55,7 @@ interface TriFunction<T,U,V,R>{
 }
 ```
 
-![자료](https://github.com/kps990515/Spring/blob/main/3%EC%9E%A5/Validation.png)
+![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/javaUtilFunction/unaryfunction.png)
 ```java
 @FunctionalInterface
 interface UnaryOperator<T> extends Function<T,T>{
