@@ -12,5 +12,5 @@
 ### 4. [4장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/predicate%EA%B2%B0%ED%95%A9)
        인터페이스 결합, Collection 함수형인터페이스
 
-### 4. [5장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/predicate%EA%B2%B0%ED%95%A9)
+### 4. [5장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/%EB%A9%94%EC%84%9C%EB%93%9C%EC%B0%B8%EC%A1%B0)
        메서드 참조
