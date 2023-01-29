@@ -1,4 +1,4 @@
-## Predicate결합
+## 인터페이스 결합, Collection 함수형인터페이스
 
 - 인터페이스의 메소드
  1. default메소드 - 하위호환성, 유연성위함(새로운 인터페이스 기능 추가 시 default사용하면 재정의안해줘도됨)
@@ -45,7 +45,7 @@ Function<Integer, Integer> h2 = f.compose(g)
 ```
 
 ### 함수형 인터페이스 사용한 Collenction
-![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/javaUtilFunction/bifunction.png)
+![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/predicate%EA%B2%B0%ED%95%A9/collection.png)
 
 ```java
 list.forEach(i -> sysout(i));

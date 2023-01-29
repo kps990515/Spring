@@ -8,3 +8,6 @@
 
 ### 3. [3장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/javaUtilFunction)
        java.util.function 패키지
+
+### 4. [4장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/predicate%EA%B2%B0%ED%95%A9)
+       인터페이스 결합, Collection 함수형인터페이스
