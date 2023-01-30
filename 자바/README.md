@@ -15,5 +15,8 @@
 ### 5. [5장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/%EB%A9%94%EC%84%9C%EB%93%9C%EC%B0%B8%EC%A1%B0)
        메서드 참조
 
-### 5. [6장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Stream)
+### 6. [6장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Stream)
        Stream
+
+### 7. [7장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Stream)
+       Stream 만들기
