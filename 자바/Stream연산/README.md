@@ -59,7 +59,7 @@ fileStream.map(File::getName)
     .distinct(); // 중복제거
 ```
 
-![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/predicate%EA%B2%B0%ED%95%A9/collection.png)
+![자료](https://github.com/kps990515/Spring/blob/main/%EC%9E%90%EB%B0%94/Stream%EC%97%B0%EC%82%B0/stream.png)
 
 ### 최종연산
 
