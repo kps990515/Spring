@@ -29,3 +29,9 @@
 
 ### 10. [10장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Stream%EC%B5%9C%EC%A2%85%EC%97%B0%EC%82%B0)
         Stream 최종연산
+
+### 11. [11장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Collect)
+        Collect
+
+### 12. [12장](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94/Grouping)
+        Grouping
