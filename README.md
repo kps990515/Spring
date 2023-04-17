@@ -1,5 +1,9 @@
 # [Java](https://github.com/kps990515/Spring/tree/main/%EC%9E%90%EB%B0%94)
 
+# [SQL](https://github.com/kps990515/Spring/tree/main/SQL)
+
+# [JPA](https://github.com/kps990515/Spring/tree/main/JPA)
+
 # Spring
 
 ### 1. [1장](https://github.com/kps990515/Spring/tree/master/1장)
