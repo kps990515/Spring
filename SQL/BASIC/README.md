@@ -223,6 +223,10 @@ SELECT empno, ename, hiredate
 ```
 
 ### 순서정렬 / NULL은 따로처리
+ - NULL은 가장 큰 값 그러므로 작은수로 처리필요
+ - LAST : 컬럼명(NULLS) LAST를 붙이면서 특정 컬럼을 제일 마지막으로 보낼수 있다
+ - FIRST : 그 반대
+
 ```SQL
 SELECT EMPNO,
        ENAME,
@@ -236,9 +240,89 @@ SELECT EMPNO,
        SAL,
        COMM
 FROM EMP
-ORDER BY COMM DESC NULLS LAST;
+ORDER BY COMM DESC NULLS LAST; -- COMM 내림차순 / NULL은 가장 마지막에
 ```
 
+### 날짜 테이블, 인덱스 생성
+ - DATE형식 데이터에는 년,월,일 중에 아무거나 사용해서 다 IN으로 조회가능
+
+```SQL
+CREATE TABLE tdt  
+AS 
+SELECT dt 
+      ,TO_CHAR(dt,'YYYY') AS YYYY
+      ,TO_CHAR(dt,'MM')   AS MM
+      ,TO_CHAR(dt,'DD')   AS DD
+      ,TO_CHAR(dt,'MMDD') AS MMDD
+      ,TO_CHAR(dt,'Q')    AS QUARTER
+      ,TO_CHAR(dt,'W')    AS WEEK      
+      ,TO_CHAR(dt,'D')    AS DAY
+  FROM (SELECT TO_DATE('1950/01/01','YYYY/MM/DD') + LEVEL - 1  AS DT 
+          FROM dual 
+        CONNECT BY LEVEL <= 30000) ; -- 30000까지 일수더하기
+
+select * from tdt;
+```
+
+```SQL
+CREATE INDEX tdt_dt_ix      ON tdt(dt) ;
+CREATE INDEX tdt_yyyy_ix    ON tdt(yyyy,dt) ; -- 복합인덱스
+CREATE INDEX tdt_mm_ix      ON tdt(mm,dt) ; 
+CREATE INDEX tdt_dd_ix      ON tdt(dd,dt) ; 
+CREATE INDEX tdt_mmdd_ix    ON tdt(mmdd,dt) ; 
+CREATE INDEX tdt_quarter_ix ON tdt(quarter,dt) ;    
+CREATE INDEX tdt_week_ix    ON tdt(week,dt) ;    
+CREATE INDEX tdt_day_ix     ON tdt(day,dt) ;
+```
+
+```SQL
+SELECT CUST_ID,
+       CUST_LNAME,
+       CITY,
+       COUNTRY_NAME,
+       DATE_OF_BIRTH
+  FROM CUSTOMERS
+ WHERE DATE_OF_BIRTH IN (SELECT DT
+                           FROM TDT
+                          WHERE MMDD = TO_CHAR(SYSDATE,'MMDD')); 
+```
+
+### 날짜 테이블 활용한 주말 제외하는 쿼리
+
+```SQL
+UPDATE tdt 
+   SET holiday = '주말'
+ WHERE day IN ('1','7') ;
+```
+
+```SQL
+SELECT A.CUST_ID
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,A.DATE_OF_BIRTH
+       ,A.BIRTH
+       ,A.BIRTH-7
+       ,MAX(B.DT) AS 발송일
+  FROM ( SELECT CUST_ID
+         ,CUST_FNAME
+         ,CUST_LNAME
+         ,DATE_OF_BIRTH
+         ,TO_DATE(TO_CHAR(SYSDATE,'YYYY')||TO_CHAR(DATE_OF_BIRTH,'MMDD')) AS BIRTH
+         FROM CUSTOMERS
+        )A, 
+        ( SELECT DT
+          FROM tdt
+          WHERE HOLIDAY IS NULL
+         )B
+WHERE B.DT(+) BETWEEN A.BIRTH-14 AND A.BIRTH-7
+GROUP BY A.CUST_ID 
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,A.DATE_OF_BIRTH
+       ,A.BIRTH
+       ,A.BIRTH-7
+ORDER BY BIRTH ASC;   
+```
 
 ### 기타 날짜관련 함수
 - CURRENT_DATE : 서버에 접속한 클라이언트의 시간 반환(세션)
