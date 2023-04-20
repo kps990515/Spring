@@ -220,3 +220,119 @@ WHERE NOT EXISTS (SELECT 1 -- A,B비교 후 A값과 일치하면 FALSE 다르면
 ### 중복행을 없애고 싶을때는 DISTINCT / GROUPBY를 사용하자
  - GROUP BY가 DISTINCT보다 더 높은 비용을 쓰지만, 집계함수에서 성능이 좋다
  - 데이터양이 많을때는 GROUP BY가 더 좋다
+
+### Carteisan Product = Cross Join
+ - 조인 조건이 없어 A,B의 모든 데이터가 나온다(A곱B)
+```SQL
+-- ORACLE
+SELECT A.NAME, B.NAME
+FROM EMP A, DEPT B
+
+-- ANSI
+SELECT A.NAME, B.NAME
+FROM EMP
+CROSS JOIN DEPT ;
+```
+
+### SUBQUERY보다는 JOIN, IN, EXISTS 사용하자
+ - CUSTOMERS, ORDERS, WISHLIST 티에블을 이용, WISHLIST.DELETED = N인 고객의 주문합계(ORDER.ORDER_TOTLA의 SUM)을 구하라
+
+ - 서브쿼리 방식 : 코스트 12
+  1. ORDERS FULL SCAN
+  2. CUSTOMERS도 FULL SCAN 해서 CUSTOMERS, ORDERS 머지조인 (자원 폭발)
+  3. CUSTOMERS X ORDERS의 합으로 WISHLIST.DELETED = 'N' 해시조인
+ ```SQL
+ SELECT A.CUST_ID
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,SUM(C.ORDER_TOTAL) AS ORDER_TOTAL
+  FROM CUSTOMERS A, 
+       (SELECT A.CUST_ID
+          FROM CUSTOMERS A, WISHLIST B 
+         WHERE A.CUST_ID = B.CUST_ID
+           AND B.DELETED = 'N'
+         GROUP BY A.CUST_ID) B, ORDERS C
+ WHERE A.CUST_ID = B.CUST_ID  
+   AND A.CUST_ID = C.CUST_ID -- 쓸데 없이 모든 A와 C를 비교한다
+GROUP BY A.CUST_ID, A.CUST_FNAME, A.CUST_LNAME
+ORDER BY CUST_ID;
+ ```
+
+- EXISTS 방식 : 코스트 11
+ 1. WISHLIST.DELETED = N 만 추출
+ 2. WISHLIST.DELETED = N 과 CUSTOMERS 해시조인(필요한 값만 먼저 추출)
+ 3. ORDERS와 머지조인
+```SQL
+SELECT A.CUST_ID
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,SUM(B.ORDER_TOTAL) AS ORDER_TOTAL
+  FROM CUSTOMERS A, ORDERS B
+ WHERE A.CUST_ID = B.CUST_ID -- 2. A,B비교
+   AND EXISTS (SELECT 1
+                 FROM WISHLIST C
+                WHERE A.CUST_ID = C.CUST_ID -- 1. 먼저 A의 범위를 줄여놓고
+                  AND C.DELETED = 'N')
+GROUP BY A.CUST_ID, A.CUST_FNAME, A.CUST_LNAME
+ORDER BY CUST_ID;
+```
+
+### CARDINALITY와 COST고려
+ - COST가 낮은게 더 효율적이지만
+ - 데이터가 커지면 커질수록 CARDINALITY도 고려해야한다
+
+ - CUSTOMERS, ORDERS, WISHLIST 테이블을 이용, WISHLIST.DELETED = N인 고객의 주문합계와 관심상품목록합계를 구하라
+
+ 1. COST고려방식(12/158)
+ ```SQL
+ SELECT A.CUST_ID
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,SUM(B.ORDER_TOTAL) AS ORD_TOT -- A X B X 필터된 C의 SUM
+       ,C.WISH_TOT
+  FROM CUSTOMERS A, ORDERS B,
+       (SELECT A.CUST_ID
+              ,SUM(C.UNIT_PRICE*C.QUANTITY) AS WISH_TOT 
+          FROM CUSTOMERS A, WISHLIST C
+         WHERE A.CUST_ID = C.CUST_ID  
+           AND C.DELETED = 'N'
+         GROUP BY A.CUST_ID) C 
+ WHERE A.CUST_ID = B.CUST_ID -- A X B
+   AND A.CUST_ID = C.CUST_ID -- A X B X 필터된 C
+GROUP BY A.CUST_ID, A.CUST_FNAME, A.CUST_LNAME,C.WISH_TOT
+ORDER BY CUST_ID;
+```
+
+2. CARDINALITY 고려방식(13/47)
+```SQL
+SELECT A.CUST_ID
+       ,A.CUST_FNAME
+       ,A.CUST_LNAME
+       ,B.ORD_TOT
+       ,C.WISH_TOT
+  FROM CUSTOMERS A, 
+       (SELECT CUST_ID,
+               SUM(ORDER_TOTAL) AS ORD_TOT -- ORDER_TOT이 크면 클수록 느려짐
+          FROM ORDERS
+         GROUP BY CUST_ID) B,
+       (SELECT CUST_ID
+              ,SUM(UNIT_PRICE*QUANTITY) AS WISH_TOT
+          FROM WISHLIST 
+         WHERE DELETED = 'N'
+         GROUP BY CUST_ID) C 
+ WHERE A.CUST_ID = B.CUST_ID
+   AND A.CUST_ID = C.CUST_ID
+ORDER BY CUST_ID;
+```
+
+### UNION ALL에서 서로 컬럼이 다를때
+ - 없는 컬럼은 NULL AS 컬럼명으로 맞춰준다
+ - 중복된 컬럼의 숫자는 SUM으로 해준다
+
+ ```SQL
+ SELECT ITEM, DATE SUM(QTY), SUM(RESULT)
+ FROM(
+  SELECT ITEM, DATE, QTY, NULL AS RESULT
+  UNION ALL
+  SELECT ITEM, DATE, NULL, RESULT)
+ ```
