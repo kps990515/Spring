@@ -219,6 +219,9 @@ NULL 1	     NULL        1	29025
 
 ### PIVOT
  - 데이터의 행과 열을 바꿔주는 함수
+ - FOR 뒤에 있는 컬럼(JOB)이 열로 변경
+ - 집계함수(SUM(SAL))가 열의 값으로 변경
+
  ```SQL
  SELECT *
   FROM (SELECT deptno
@@ -255,6 +258,19 @@ DEPTNO ANALYST  CLERK...
 30	   NULL	    950  	2850	NULL	5600
  ```
  
-
+### UNPIVOT
+ - 데이터의 열을 행으로 바꿔주는 함수
+ - 동일하게 맨 처음나오는 컬럼(SALES_AOMUNT)가 값
+ - FOR 다음 컬럼(MONTH)가 행으로 변경
+```SQL
+SELECT Product, Month, Sales_Amount
+FROM (
+SELECT Product, January, February, March, April, May, June, July, August, September, October, November, December
+FROM Sales
+)
+UNPIVOT (
+Sales_Amount FOR Month IN (January, February, March, April, May, June, July, August, September, October, November, December)
+);
+```
 
  
