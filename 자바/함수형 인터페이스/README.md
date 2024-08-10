@@ -15,6 +15,25 @@
 | **Predicate<T>**        | `boolean test(T t)` | 매개값이 조건에 맞는지 단정해서 boolean 리턴       | O            | O          |
 | **Operator**            | `R apply(T t)`   | 매개값을 연산해서 결과 리턴하기                    | O            | O          |
 
+3. 예시
+```java
+public class LambdaRunnableExample {
+
+    public static void main(String[] args) {
+        // Runnable을 람다식으로 구현
+        Runnable runnable = () -> System.out.println("Running in a lambda expression");
+
+        // Runnable을 사용하는 스레드 생성 및 실행
+        Thread thread = new Thread(runnable); // Thread(Ruunable Target)으로 클래스 정의가 되어있어 람다로 구현된 함수형 인터페이스 사용 가능
+        thread.start();
+
+        // 메인 스레드의 종료 메시지
+        System.out.println("Main thread finished");
+    }
+}
+```
+
+
 ```java
 @FunctionalInterface
 interface MyFunction{
@@ -34,42 +53,3 @@ MyFunction f = (a,b) -> a > b ? a:b
 // 에러 안남
 int max = f.max(a,b)
 ```
-
-### 익명객체를 람다식으로 대체
-```java
-Collections.sort(list, new Comparator<String>(){
-                            public int compare(String s1, String s2){
-                                return s2.compareTo(s1);
-                            }    
-                        })
-
-//람다식으로하면
-Collections.sort(list, (s1, s2) -> s2.compareTo(s1));                        
-```
-
-함수형 인터페이스 타입의 매개변수, 반환타입
-```java
-void aMethod(MyFunction f){
-    f.myMethod();
-}
-
-MyFunction f = () -> sysout("myMethod()");
-aMethod(f);
-
-// 줄여쓰면
-aMethod(() -> sysout("myMethod()"))
-```
-
-### 함수형 인터페이스 타입의 반환타입
-```java
-MyFunction myMethod(){
-    MyFunction f = () -> {};
-    return f;
-}
-
-//줄여쓰면
-MyFunction myMethod() {
-    return () -> {};
-}
-```
-
