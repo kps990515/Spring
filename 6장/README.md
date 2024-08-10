@@ -1,11 +1,11 @@
 ## 6장 - 비동기
 
-![자료](https://github.com/kps990515/Spring/blob/main/5%EC%9E%A5/filter.png)
-
-1. filter
-- Client 요청/응답의 최초/최종단계 위치
-- Web application에 등록
-- Servelet Request, Response 객체 변환 가능
+1. @Async : 메서드를 비동기로 실행
+- 반환타입
+    - void
+    - Future<T> : 메서드의 결과를 나중에 비동기적으로 수신
+    - CompletableFuture<T> : Future 확장 버전
+    - ListenableFuture<T> : 완료 후 콜백이 가능한 Future
 
 ```java
 @Service

@@ -3,9 +3,11 @@
 ![자료](https://github.com/kps990515/Spring/blob/main/5%EC%9E%A5/filter.png)
 
 1. filter
+- 정의 : 서블릿, JSP 도착 전 애플리케이션에서 요청(Request)과 응답(Response)을 가로채어, 전처리 또는 후처리 작업을 수행할 수 있는 컴포넌트
 - Client 요청/응답의 최초/최종단계 위치
 - Web application에 등록
 - Servelet Request, Response 객체 변환 가능
+- init, doFilter, destroy
 
 ```java
 @WebFilter(urlPatterns = "/api/*")
@@ -34,9 +36,10 @@ public class RequestFilter implements Filter {
 ```
 
 2. Interceptor
-- Filter, AOP 와 유사
+- 정의 : Spring MVC에서 컨트롤러에 전달되는 요청을 가로채어, 전처리 및 후처리 작업을 수행할 수 있는 강력한 도구
 - Spring Context에 등록
-- 인증단계, 로깅
+- preHandle(Controller호출전, true/false반환), postHandle(Controller후, view렌더링전), afterCompletion
+
 
 ```java
 @Component
