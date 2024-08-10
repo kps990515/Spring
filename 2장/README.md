@@ -1,7 +1,10 @@
 ## 2장 - IOC,DI / AOP
 
 IOC
+ - 객체의 생성과 의존성 관리의 제어 권한을 프레임워크나 컨테이너에 위임함으로써, 코드의 유연성, 재사용성, 테스트 용이성을 높이는 소프트웨어 설계 원칙
  - 자바 객체를 new가 아닌 SpringContainer가 관리하는 것 = Inversion of Control
+ - DI을 통해 구현(생성자, Setter, 필드 주입)
+ - 객체 간 결합도를 낮춰 의존성 관리, 코드유연성 향상
 
 ### IOC
 ```java
@@ -39,6 +42,20 @@ class AppConfig{
 ```
 
 ### AOP
+- 핵심 비즈니스 로직과는 별개의 횡단 관심사(로깅, 보안, 트랜잭션 처리 등)를 모듈화
+- 코드의 중복을 줄이고, 유지보수성을 높이는 중요한 프로그래밍 패러다임
+
+1. 목적
+- 로깅, 보안, 트랜잭션과 같은 횡단관심사를 비즈니스 로직에서 분리
+- 모듈화해서 중복 코드 줄임
+- 유지보수성 향상
+
+2. 주요개념
+- Aspect : 모듈화한 코드
+- Join Point : Aspect가 적용되는 지점(메서드 호출시, 객체 생성 시)
+- Advice : Join Point에서 실행되는 코드
+- Point Cut : 어느 Joinpoint에 어느 Advice를 적용시킬지 설정하는 표현식
+
 ![자료](https://github.com/kps990515/Spring/blob/main/2%EC%9E%A5/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C.png)
 
 - Parameter AOP

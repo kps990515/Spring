@@ -1,7 +1,7 @@
 ## 4장 - Exception
 
-@ControllerAdivce : Global예외처리 및 특정 package/controller예외처리
-@ExceptionHandler : 특정 Controller 예외처리
+- @ControllerAdivce : Global예외처리 및 특정 package/controller예외처리
+- @ExceptionHandler : 특정 Exception 예외처리
 
 1. 전체 Exception 처리
 ```java
